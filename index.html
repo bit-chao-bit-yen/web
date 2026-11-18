@@ -1,0 +1,40 @@
+<!doctype html> <!-- บอกเบราว์เซอร์ว่าเป็น HTML5 -->
+<html lang="th"> <!-- ภาษาหลักของหน้า = ไทย (ช่วยเรื่องตัดคำ / screen reader) -->
+<head> <!-- ส่วนตั้งค่า ไม่แสดงบนจอ -->
+<meta charset="utf-8"> <!-- รองรับภาษาไทยและอีโมจิ -->
+<meta name="viewport" content="width=device-width, initial-scale=1"> <!-- มือถือแสดงตามความกว้างจอจริง ไม่ย่อทั้งหน้า -->
+<meta name="theme-color" content="#d84315"> <!-- สีแถบเบราว์เซอร์บนมือถือ (ส้มแดง) -->
+<title>สุกี้ตี๋น้อยใกล้ฉัน</title> <!-- ชื่อบนแท็บเบราว์เซอร์ -->
+<link rel="preconnect" href="https://fonts.googleapis.com"> <!-- เปิดการเชื่อมต่อ Google Fonts ไว้ก่อน ให้ฟอนต์โหลดเร็วขึ้น -->
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> <!-- เซิร์ฟเวอร์ไฟล์ฟอนต์จริง -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;600&family=Noto+Sans+Thai:wght@400;500;600&display=swap"> <!-- Kanit = หัวข้อ, Noto Sans Thai = เนื้อหา -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"> <!-- สไตล์ของแผนที่ Leaflet -->
+<link rel="stylesheet" href="css/style.css"> <!-- สไตล์ของเว็บเราเอง (โหลดหลังสุด เพื่อทับของ Leaflet ได้) -->
+</head>
+<body> <!-- เนื้อหาที่แสดงบนจอ -->
+<aside id="side"> <!-- แถบซ้าย (มือถือ = ครึ่งล่าง) -->
+  <header class="brand"> <!-- แถบหัวสีส้มแดง -->
+    <h1>🍲 สุกี้ตี๋น้อยใกล้ฉัน</h1> <!-- ชื่อเว็บ -->
+    <p>หาสาขาใกล้คุณ พร้อมสรุปรีวิว 5 ด้านจาก Google</p> <!-- คำอธิบายสั้น (ซ่อนบนมือถือ) -->
+  </header>
+  <div class="controls"> <!-- ส่วนปุ่มและช่องค้นหา -->
+    <button id="geo" class="btn primary">📍 ใช้ตำแหน่งของฉัน</button> <!-- ขอ GPS แล้วเรียงสาขาตามระยะทาง -->
+    <form id="search" class="search"> <!-- ฟอร์มค้นหาที่อยู่ (กด Enter ได้) -->
+      <input id="q" type="search" placeholder="หรือพิมพ์ที่อยู่ / สถานที่" aria-label="ที่อยู่หรือสถานที่" autocomplete="off"> <!-- ช่องพิมพ์; aria-label ให้ screen reader อ่าน -->
+      <button class="btn">ค้นหา</button> <!-- ปุ่มส่งฟอร์ม -->
+    </form>
+    <div class="legend" aria-label="ความหมายของสี"> <!-- คำอธิบายสีป้าย -->
+      <span><i class="dot good"></i>ดี</span><span><i class="dot neutral"></i>ปานกลาง</span> <!-- เขียว = ดี, ส้ม = ปานกลาง -->
+      <span><i class="dot bad"></i>แย่</span><span><i class="dot nodata"></i>ข้อมูลไม่พอ</span> <!-- แดง = แย่, เทา = ข้อมูลไม่พอ -->
+    </div>
+    <div id="msg" role="status">ถ้าเห็นข้อความนี้ แปลว่าสคริปต์ไม่ทำงาน: เปิดผ่าน http server (python -m http.server) อย่าดับเบิลคลิกไฟล์</div> <!-- ข้อความสถานะ; สคริปต์ทำงานแล้วจะเขียนทับ; role=status ให้ screen reader อ่านเมื่อเปลี่ยน -->
+    <details id="overall" class="overall" hidden></details> <!-- การ์ดภาพรวมทั้งเครือ (ui.js เติมเนื้อหา แล้วค่อยเลิกซ่อน) -->
+  </div>
+  <div id="list"></div> <!-- รายการการ์ดสาขา (ui.js เติมเนื้อหา) -->
+</aside>
+<main id="map"></main> <!-- พื้นที่แผนที่ (map.js สร้าง Leaflet ลงตรงนี้) -->
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script> <!-- ไลบรารีแผนที่ Leaflet (ต้องโหลดก่อน main.js) -->
+<script type="module" src="js/main.js"></script> <!-- โค้ดหลักของเว็บ (ES module: ต้องเปิดผ่าน http server) -->
+</body>
+</html>

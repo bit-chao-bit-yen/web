@@ -1,0 +1,4 @@
+# ข้อมูลดิบจาก teenoi-predict (เว็บใช้แค่ branch_summary.json)
+output/*.csv
+# ค่าที่ Vercel CLI สร้างตอน link โปรเจกต์
+.vercel/

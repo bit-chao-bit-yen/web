@@ -1,0 +1,192 @@
+/* ===== ตัวแปรสีและค่ากลาง (แก้ที่นี่ เปลี่ยนทั้งเว็บ) ===== */
+:root {
+  --accent: #d84315; /* สีหลัก ส้มแดง: ปุ่ม, ขอบหมุด, ระยะทาง */
+  --accent-dark: #b71c1c; /* สีหลักตอนชี้เมาส์ */
+  --accent-soft: #fff3ef; /* พื้นการ์ดที่ถูกเลือก */
+  --text: #1f1f1f; /* สีตัวอักษรหลัก */
+  --muted: #6b6b6b; /* สีตัวอักษรรอง (ที่อยู่, คำอธิบาย) */
+  --line: #ececec; /* สีเส้นขอบ */
+  --bg: #f6f6f6; /* พื้นหลังแถบซ้าย */
+  --card: #fff; /* พื้นการ์ด / กล่อง */
+  --good: #2e7d32; /* เขียว = ดี */
+  --neutral: #ef8f00; /* ส้ม = ปานกลาง */
+  --bad: #c62828; /* แดง = แย่ */
+  --nodata: #b0b0b0; /* เทา = ข้อมูลไม่พอ */
+  --shadow: 0 1px 3px rgb(0 0 0 / .06), 0 4px 14px rgb(0 0 0 / .06); /* เงานุ่มของการ์ด */
+  --head: "Kanit", "Noto Sans Thai", system-ui, sans-serif; /* ฟอนต์หัวข้อ */
+}
+
+/* ===== พื้นฐานทั้งหน้า ===== */
+* { box-sizing: border-box; } /* ความกว้างรวม padding + border แล้ว คำนวณง่าย */
+html, body { height: 100%; } /* ให้หน้าเต็มความสูงจอ */
+body {
+  margin: 0; /* ตัดขอบขาวรอบหน้า */
+  display: flex; /* วางแถบซ้ายกับแผนที่เรียงแนวนอน */
+  height: 100dvh; /* สูงเท่าจอจริง (dvh ไม่โดนแถบ URL บนมือถือบัง) */
+  background: var(--bg); /* สีพื้นหลัง */
+  color: var(--text); /* สีตัวอักษร */
+  font: 15px/1.5 "Noto Sans Thai", system-ui, sans-serif; /* ฟอนต์เนื้อหา 15px ระยะบรรทัด 1.5 */
+}
+
+/* ===== แถบซ้าย ===== */
+#side {
+  width: 400px; /* กว้างคงที่บนจอใหญ่ */
+  display: flex; /* เรียงหัว / ปุ่ม / รายการ */
+  flex-direction: column; /* จากบนลงล่าง */
+  background: var(--bg); /* สีพื้น */
+  box-shadow: 2px 0 12px rgb(0 0 0 / .08); /* เงาแยกจากแผนที่ */
+  z-index: 1; /* อยู่เหนือแผนที่ (เงาไม่โดนบัง) */
+}
+.brand { padding: 18px 18px 16px; color: #fff; background: linear-gradient(135deg, #f4511e, #c62828); } /* แถบหัว: ไล่สีส้ม → แดง ตัวหนังสือขาว */
+h1 { font: 600 22px/1.3 var(--head); margin: 0; } /* ชื่อเว็บ: Kanit หนา 22px */
+.brand p { margin: 2px 0 0; font-size: 14px; opacity: .9; } /* คำอธิบายใต้ชื่อ จางลงนิดหน่อย */
+
+.controls { padding: 14px 14px 10px; background: var(--card); border-bottom: 1px solid var(--line); } /* ส่วนปุ่ม: พื้นขาว เส้นคั่นล่าง */
+
+/* ปุ่มทั่วไป */
+.btn {
+  font: inherit; /* ใช้ฟอนต์เดียวกับหน้า (ปุ่มปกติไม่สืบทอด) */
+  font-weight: 500; /* หนาปานกลาง */
+  padding: 10px 14px; /* ระยะในปุ่ม กดง่ายบนมือถือ */
+  border-radius: 12px; /* มุมโค้ง */
+  cursor: pointer; /* เมาส์เป็นรูปมือ */
+  border: 1px solid var(--line); /* ขอบบาง */
+  background: var(--card); /* พื้นขาว */
+  color: var(--text); /* สีตัวอักษร */
+  transition: background .15s, transform .15s; /* เปลี่ยนสี / ยุบตัวแบบนุ่มๆ */
+}
+.btn:hover:not(:disabled) { background: #f3f3f3; } /* ชี้เมาส์ → เทาอ่อน */
+.btn:active:not(:disabled) { transform: scale(.98); } /* กดค้าง → ยุบลงนิดหนึ่ง */
+.btn:disabled { opacity: .6; cursor: progress; } /* กำลังทำงาน → จางลง + เมาส์รูปรอ */
+.btn.primary { width: 100%; background: var(--accent); border-color: var(--accent); color: #fff; box-shadow: 0 2px 8px rgb(216 67 21 / .3); } /* ปุ่มหลัก (GPS): เต็มความกว้าง สีส้มแดง */
+.btn.primary:hover:not(:disabled) { background: var(--accent-dark); } /* ปุ่มหลักตอนชี้ → เข้มขึ้น */
+
+/* ช่องค้นหา */
+.search { display: flex; gap: 6px; margin-top: 8px; } /* ช่องพิมพ์ + ปุ่ม เรียงแนวนอน */
+.search input { flex: 1; min-width: 0; font: inherit; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; background: #fafafa; } /* ช่องพิมพ์กินที่ที่เหลือ (min-width: 0 กันล้นบนจอแคบ) */
+.search input:focus { background: #fff; } /* กำลังพิมพ์ → พื้นขาว */
+.search input:focus, .btn:focus-visible, .item:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; } /* กรอบส้มตอนเลือกด้วยคีย์บอร์ด (Tab) */
+
+/* คำอธิบายสี */
+.legend { display: flex; flex-wrap: wrap; gap: 4px 12px; margin-top: 12px; font-size: 13px; color: var(--muted); } /* เรียงแนวนอน ล้นแล้วขึ้นบรรทัดใหม่ */
+.dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 5px; vertical-align: 1px; background: var(--c); } /* จุดกลมสี (สีมาจาก --c ด้านล่าง) */
+
+/* class สีตาม label: ตั้งตัวแปร --c ให้ .dot / .chip / .bar ใช้ร่วมกัน */
+.good { --c: var(--good); } /* ดี = เขียว */
+.neutral { --c: var(--neutral); } /* ปานกลาง = ส้ม */
+.bad { --c: var(--bad); } /* แย่ = แดง */
+.nodata { --c: var(--nodata); } /* ข้อมูลไม่พอ = เทา */
+
+#msg { margin-top: 6px; font-size: 13px; color: var(--muted); min-height: 20px; } /* ข้อความสถานะ (สูงขั้นต่ำกันหน้ากระตุก) */
+#msg.err { color: var(--bad); } /* error → ตัวแดง */
+
+/* ===== การ์ดภาพรวมทั้งเครือ ===== */
+.overall { margin-top: 8px; padding: 8px 12px; background: #fafafa; border: 1px solid var(--line); border-radius: 12px; font-size: 13px; } /* กล่องพับได้ พื้นเทาอ่อน */
+.overall summary { cursor: pointer; font: 500 14px var(--head); } /* หัวข้อ: กดเพื่อพับ / กาง */
+.overall summary small { font: 400 12px "Noto Sans Thai", system-ui, sans-serif; color: var(--muted); } /* "จาก 55 สาขา" ตัวเล็กสีจาง */
+.overall .asps { margin: 8px 0 2px; gap: 6px; } /* ระยะระหว่างแถว */
+
+/* ===== รายการสาขา ===== */
+#list { flex: 1; overflow-y: auto; padding: 12px; } /* กินที่ที่เหลือ เลื่อนขึ้นลงได้ในตัว */
+.item {
+  display: block; /* การ์ดเป็น <button> ต้องบังคับเป็น block */
+  width: 100%; /* เต็มความกว้าง */
+  text-align: left; /* ปุ่มปกติจัดกลาง → ชิดซ้าย */
+  font: inherit; /* ใช้ฟอนต์ของหน้า */
+  color: inherit; /* ใช้สีตัวอักษรของหน้า */
+  padding: 12px 14px; /* ระยะในการ์ด */
+  margin-bottom: 10px; /* ระยะห่างระหว่างการ์ด */
+  background: var(--card); /* พื้นขาว */
+  cursor: pointer; /* เมาส์รูปมือ */
+  border: 1px solid transparent; /* ขอบใส (ไว้เปลี่ยนสีตอนชี้ / เลือก ไม่ให้การ์ดขยับ) */
+  border-radius: 14px; /* มุมโค้ง */
+  box-shadow: var(--shadow); /* เงานุ่ม */
+  transition: border-color .15s, transform .15s; /* เปลี่ยนแบบนุ่มๆ */
+}
+.item:hover { transform: translateY(-1px); border-color: #ddd; } /* ชี้เมาส์ → ลอยขึ้นนิดหนึ่ง */
+.item.active { border-color: var(--accent); background: var(--accent-soft); } /* การ์ดที่เลือก → ขอบส้ม พื้นส้มอ่อน */
+.head { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; } /* ชื่อซ้าย ระยะทางขวา */
+.name { font: 500 16px/1.35 var(--head); } /* ชื่อสาขา (การ์ด + popup) */
+.dist { flex: none; font-size: 13px; font-weight: 600; color: #fff; background: var(--accent); padding: 0 8px; border-radius: 999px; } /* ป้ายระยะทาง: แคปซูลส้ม (flex: none = ไม่ถูกบีบ) */
+.meta { font-size: 13px; color: var(--muted); } /* บรรทัดดาว + จำนวนรีวิว */
+.star { color: #e09b00; font-weight: 600; } /* ดาวสีทอง */
+.addr { font-size: 13px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } /* ที่อยู่บรรทัดเดียว ยาวเกิน → ... */
+
+/* ป้ายสี (ชื่อด้าน / label) */
+.chips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; } /* เรียงแนวนอน ล้นแล้วขึ้นบรรทัดใหม่ */
+.chip { font-size: 12px; padding: 0 8px; border-radius: 999px; white-space: nowrap; font-weight: 500; color: var(--c); background: color-mix(in srgb, var(--c) 12%, white); } /* แคปซูล: ตัวอักษรสี --c พื้นสีเดียวกันจาง 12% */
+.chip.nodata { color: var(--muted); } /* เทาอ่อนเกินอ่าน → ใช้สีตัวอักษรรอง */
+
+/* ===== แผนที่ ===== */
+#map { flex: 1; } /* กินที่ที่เหลือทั้งหมด */
+
+/* ป้ายจำนวนสาขา มุมขวาบน */
+.count { background: #fff; border-radius: 14px; padding: 6px 14px; box-shadow: var(--shadow); font: 14px/1.3 "Noto Sans Thai", system-ui, sans-serif; color: var(--muted); text-align: right; } /* กล่องขาวมีเงา ชิดขวา */
+.count b { font: 600 22px/1.2 var(--head); color: var(--accent); margin-right: 4px; } /* ตัวเลขใหญ่สีส้ม */
+.count small { display: block; font-size: 12px; } /* "บนจอตอนนี้ X" บรรทัดล่าง */
+
+/* หมุดสาขา (หยดน้ำ) */
+.pin span {
+  display: grid; /* ใช้ grid จัดอีโมจิกึ่งกลาง */
+  place-items: center; /* กึ่งกลางทั้งแนวตั้งและนอน */
+  width: 34px; /* กว้าง */
+  height: 34px; /* สูง */
+  font-size: 17px; /* ขนาดอีโมจิ */
+  background: #fff; /* พื้นขาว */
+  border: 3px solid var(--accent); /* ขอบส้ม */
+  border-radius: 50% 50% 50% 0; /* มน 3 มุม แหลม 1 มุม = หยดน้ำ */
+  transform: rotate(-45deg); /* หมุนให้มุมแหลมชี้ลง */
+  box-shadow: 0 2px 6px rgb(0 0 0 / .3); /* เงาให้ดูลอย */
+  transition: transform .15s, background .15s; /* ขยาย / เปลี่ยนสีแบบนุ่ม */
+}
+.pin b { transform: rotate(45deg); font-weight: normal; line-height: 1; } /* หมุนอีโมจิกลับให้ตั้งตรง */
+.pin.on span, .pin:hover span { background: var(--accent); transform: rotate(-45deg) scale(1.15); } /* หมุดที่เลือก / ชี้ → พื้นส้ม ใหญ่ขึ้น 15% */
+
+/* ===== popup รายละเอียดสาขา ===== */
+.leaflet-popup-content-wrapper { border-radius: 14px; box-shadow: 0 6px 24px rgb(0 0 0 / .18); } /* กรอบ popup: มุมโค้ง เงาเข้ม */
+.leaflet-popup-content {
+  margin: 14px 10px 14px 16px; /* ระยะขอบใน (ขวาน้อยกว่า เผื่อแถบเลื่อน) */
+  padding-right: 6px; /* เว้นที่ให้แถบเลื่อน */
+  font: 14px/1.5 "Noto Sans Thai", system-ui, sans-serif; /* ฟอนต์ไทย (Leaflet ตั้งฟอนต์ของตัวเองไว้) */
+  max-height: min(400px, 60dvh); /* สูงไม่เกิน 400px หรือ 60% ของจอ (Leaflet คุมได้แค่ตอนเปิด เลยคุมด้วย CSS) */
+  overflow-y: auto; /* ยาวเกิน → เลื่อนในกล่อง */
+  overscroll-behavior: contain; /* เลื่อนสุดแล้วไม่ไปเลื่อนแผนที่ต่อ */
+  overflow-wrap: anywhere; /* คำยาวไม่มีช่องว่าง (ภาษาไทย / URL) ตัดขึ้นบรรทัดได้ */
+}
+.popup .name { font-size: 17px; } /* ชื่อสาขาใน popup ใหญ่กว่าในการ์ด */
+
+/* แถวสรุปแต่ละด้าน: ชื่อ | แถบ | ป้าย */
+.asps { display: grid; gap: 4px; margin: 10px 0; } /* กล่องรวมแถว */
+.asp { display: grid; grid-template-columns: 82px 1fr 92px; align-items: center; gap: 8px; font-size: 13px; } /* 3 คอลัมน์: ชื่อ 82px | แถบยืดได้ | ป้าย 92px */
+.asp .chip { justify-self: start; } /* ป้ายชิดซ้ายในคอลัมน์ ไม่ยืดเต็ม */
+.asp .sub { display: block; font-size: 12px; color: var(--muted); grid-column: 2 / -1; margin-top: -4px; } /* บรรทัด "บวก X% จาก Y รีวิว" ใต้แถบ (การ์ดภาพรวม) */
+.bar { height: 6px; border-radius: 3px; background: color-mix(in srgb, var(--bad) 25%, white); overflow: hidden; } /* ราง: สีแดงอ่อน = ส่วนที่ติ */
+.bar i { display: block; height: 100%; background: var(--c); } /* ส่วนที่ระบายสี = % ที่ชม (ความกว้างตั้งใน ui.js) */
+.bar.nodata { background: #eee; } /* ข้อมูลไม่พอ → รางเทา ไม่ให้ดูเหมือนโดนติ */
+
+/* ตัวอย่างรีวิว */
+.sec { font: 500 13px var(--head); color: var(--muted); margin-top: 6px; } /* หัวข้อ "ตัวอย่างรีวิว" */
+.popup details { font-size: 13px; border-top: 1px solid var(--line); padding: 6px 0; } /* หัวข้อพับได้ทีละด้าน มีเส้นคั่น */
+.popup summary { cursor: pointer; font-weight: 500; } /* บรรทัดหัวข้อ กดเพื่อพับ / กาง */
+.popup summary .chip { margin-left: 4px; } /* เว้นระยะระหว่างชื่อด้านกับป้าย */
+.popup ul { margin: 6px 0 2px; padding: 0; list-style: none; } /* รายการรีวิว ไม่มีจุดนำหน้า */
+.popup li { display: flex; gap: 6px; margin-bottom: 6px; line-height: 1.55; padding: 6px 8px; background: #f8f8f8; border-radius: 8px; } /* รีวิวแต่ละอัน: กล่องเทาอ่อน ไอคอนซ้าย ข้อความขวา */
+
+/* ปุ่มท้าย popup */
+.links { display: flex; gap: 6px; margin-top: 10px; } /* เรียงปุ่มแนวนอน */
+.links a { flex: 1; text-align: center; padding: 8px; border-radius: 10px; text-decoration: none; font-weight: 500; background: var(--accent); color: #fff !important; } /* ปุ่มนำทาง: ส้ม (!important ทับสีลิงก์ของ Leaflet) */
+.links a + a { background: #f1f1f1; color: var(--text) !important; } /* ปุ่มที่สอง (Google Maps): เทา */
+
+/* ===== มือถือ (จอแคบกว่า 760px): แผนที่บน รายการล่าง ===== */
+@media (max-width: 760px) {
+  body { flex-direction: column-reverse; } /* สลับเป็นแนวตั้ง: แผนที่ขึ้นบน */
+  #side { width: 100%; height: 58dvh; box-shadow: 0 -4px 16px rgb(0 0 0 / .1); } /* แถบรายการเต็มความกว้าง สูง 58% ของจอ */
+  .brand { padding: 10px 14px; } /* แถบหัวบางลง */
+  .brand p { display: none; } /* ซ่อนคำอธิบาย ประหยัดที่ */
+  h1 { font-size: 18px; } /* ชื่อเว็บเล็กลง */
+  .controls { padding: 10px 12px 6px; } /* ส่วนปุ่มกระชับขึ้น */
+  .leaflet-control-zoom { display: none; } /* ซ่อนปุ่มซูม (มือถือใช้นิ้วถ่างซูม) */
+  .leaflet-popup-content { max-height: 26dvh; } /* แผนที่บนมือถือสูงแค่ ~42% ของจอ popup ต้องเตี้ยลง */
+  .count { padding: 4px 10px; } /* ป้ายจำนวนเล็กลง */
+  .count b { font-size: 18px; } /* ตัวเลขเล็กลง */
+}
